@@ -1,0 +1,4 @@
+<?php
+$lang['fileuploader']['fileuploader'] = 'file uploader';
+$lang['fileuploader']['info'] = 'module allow to easy adding files into server while editing pages';
+?>
