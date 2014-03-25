@@ -13,6 +13,7 @@
     function search_theme_main() 
     {
 	    global $lang;
+            $numresults=false;
 	    $query = false;
 		
 	    if (isset($_REQUEST['q'])) {
