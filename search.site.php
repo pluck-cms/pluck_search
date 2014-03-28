@@ -13,7 +13,7 @@
     function search_theme_main() 
     {
 	    global $lang;
-            $numresults=false;
+        $numresults = false;
 	    $query = false;
 		
 	    if (isset($_REQUEST['q'])) {
@@ -47,7 +47,7 @@
 				    	foreach ($results_list as $result) {
 				    		echo $result;
 				    	}
-				    	$numresults =sizeof($results_list);
+				    	$numresults = sizeof($results_list);
 				    }
 					if (!$numresults) {
 						echo "<ul><li>" . $lang["search"]["no results"] . "</li></ul>"; 
