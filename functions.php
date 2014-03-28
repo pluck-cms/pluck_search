@@ -167,8 +167,10 @@ function read_dir_contents_recurse($directory, $mode) {
  */
  	function search_albums($querys, $usuario) 
 	{
-		$dirs = "";
+		$dirs = ""; // directory list acquired from opendir
+		$dir = ""; // dir in directory foreach loop
 		$types = "";
+		
 		global $album1_link, $album2_link, $album3_link, $search_query, $seach_found_in;
 		$resultados = "";
 		$directory = $usuario."data/settings/modules/albums";
