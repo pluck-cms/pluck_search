@@ -2,19 +2,19 @@
 /**
  * @brief functions for Pluck Search
  * Searches blog, album, pages for title, description, keyword matches.
- * 
+ *
  * @fileinfo: /data/modules/search/functions.php
- * 
+ *
  * @todo highlight result.
  */
- 
+
 //Make sure the file isn't accessed directly.
 	defined('IN_PLUCK') or exit('Access denied!');
 
 /**
  * Replace Special Characters
  */
- 	function SustituyeSpecialChars($texto){
+ 	function SustituyeSpecialChars($texto) {
 	// encode for substitution	
 		$texto = urlencode($texto);
 		// accented chars
@@ -38,7 +38,7 @@
 function read_dir_contents_recurse($directory, $mode) {
     if (!is_dir($directory))
 	return false;
-    
+
     $path = opendir($directory);
     while (false !== ($file = readdir($path))) {
     	if ($file != '.' && $file != '..') {
@@ -54,7 +54,7 @@ function read_dir_contents_recurse($directory, $mode) {
     	}
     }
     closedir($path);
-    
+
     if ($mode == 'files' && isset($files))
 	return $files;
     elseif ($mode == 'dirs' && isset($dirs))
@@ -62,33 +62,31 @@ function read_dir_contents_recurse($directory, $mode) {
     else
     	return false;
 }
-   																		
 
 /**
  * Search Content
  * @param $query str // search string
  * @param $usuarios str // ??
  * @param $directory str //
- * @param $types str // 
+ * @param $types str //
  */
-	function searchcontent($querys, $usuario, $directory, $types)
-	{
+	function searchcontent($querys, $usuario, $directory, $types) {
 		global $page1_link, $page2_link, $blog1_link, $blog2_link, $search_query, $seach_found_in;
-		$resultados = "";
-		if (is_dir($directory)){
-			$files = read_dir_contents_recurse($directory,'files');
-			if ($files){	
+		$resultados = '';
+		if (is_dir($directory)) {
+			$files = read_dir_contents_recurse($directory, 'files');
+			if ($files) {
 				$querys = SustituyeSpecialChars($querys);
 				natcasesort($files);
 				foreach ($files as $file) {
-					include ("$file");
+					include ($file);
 					$pattern = "/$querys/i";
-					$expl_file = explode("/",$file);
+					$expl_file = explode('/',$file);
 					$filename = $expl_file[count($expl_file)-1];
 					$b = strpos($filename, '.');
 					$e = strlen($filename) - $b - 3;
-					$pagestart = "";
-					if (count($expl_file) >4){
+					$pagestart = '';
+					if (count($expl_file) > 4){
 						$number = count ($expl_file);
 
 						switch ($number){
@@ -96,34 +94,29 @@ function read_dir_contents_recurse($directory, $mode) {
 							$pagestart = $expl_file[3];
 					    break;
 						case 6:
-							$pagestart = $expl_file[3] . "/" . $expl_file[4];
+							$pagestart = $expl_file[3] . '/' . $expl_file[4];
 					    break;
 						case 7:
-							$pagestart = $expl_file[3] . "/" . $expl_file[4] . "/" . $expl_file[5];
+							$pagestart = $expl_file[3] . '/' . $expl_file[4] . '/' . $expl_file[5];
 					    break;
 						case 8:
-							$pagestart = $expl_file[3] . "/" . $expl_file[4] . "/" . $expl_file[5] . "/" . $expl_file[6];
+							$pagestart = $expl_file[3] . '/' . $expl_file[4] . '/' . $expl_file[5] . '/' . $expl_file[6];
 					    break;
 						}
-						$pagestart = $pagestart . "/";
+						$pagestart = $pagestart . '/';
 					}
 					
 					$page = $pagestart . substr($filename, $b+1,$e-2);
 					
-					switch ($types){
-					
-					case "pages":
-						if(!isset($description)) $description = "";
-						if(!isset($keywords)) $keywords = "";	
+					switch ($types) {
+
+					case 'pages':
+						if(!isset($description)) $description = '';
+						if(!isset($keywords)) $keywords = '';	
 						$results = strip_tags("$title $content $description $keywords");
 						$results= SustituyeSpecialChars($results);
 						
-						if (
-							preg_match($pattern, $results) 
-							&& !strpos($file,"sitemap")
-							&& !strpos($file,"search")
-							)
-						{
+						if (preg_match($pattern, $results) && !strpos($file,'sitemap') && !strpos($file,'search')) {
 							$link = "**7**
 								<ul>
 									<li>
@@ -137,14 +130,12 @@ function read_dir_contents_recurse($directory, $mode) {
 						$title=""; $content=""; $description=""; $keywords="";
 						break;
 						
-					case "blog":
-					
-						$title=""; $content=""; $description=""; $keywords="";
-						$plink = "?file=blog&module=blog&page=viewpost&post=$page";
+					case 'blog':
+						$title=''; $content=''; $description=''; $keywords='';
+						$plink = '?file=blog&module=blog&page=viewpost&post='.$page;
 						$results = strip_tags("$post_title $post_content");
 						$results= SustituyeSpecialChars($results);
-						if (preg_match($pattern, $results)) 
-						{					
+						if (preg_match($pattern, $results)) {					
 							$resultados .= "**7**
 								<ul>
 									<li>BLOG/$post_category/
@@ -157,7 +148,7 @@ function read_dir_contents_recurse($directory, $mode) {
 					}
 				}
 			}
-				$title=""; $content=""; $description=""; $keywords="";
+				$title=''; $content=''; $description=''; $keywords='';
 		}
 		return $resultados;
 	}
@@ -165,17 +156,15 @@ function read_dir_contents_recurse($directory, $mode) {
 /**
  * @brief Search Albums
  */
- 	function search_albums($querys, $usuario) 
-	{
-		$dirs = ""; // directory list acquired from opendir
-		$dir = ""; // dir in directory foreach loop
-		$types = "";
+ 	function search_albums($querys, $usuario) {
+		$dirs = ''; // directory list acquired from opendir
+		$dir = ''; // dir in directory foreach loop
+		$types = '';
 		
 		global $album1_link, $album2_link, $album3_link, $search_query, $seach_found_in;
-		$resultados = "";
-		$directory = $usuario."data/settings/modules/albums";
-		if (file_exists($directory))
-		{
+		$resultados = '';
+		$directory = $usuario.'data/settings/modules/albums';
+		if (file_exists($directory)) {
 			$querys=SustituyeSpecialChars($querys);
 			$pattern = "/$querys/i";
 			$path = opendir($directory);
@@ -187,7 +176,7 @@ function read_dir_contents_recurse($directory, $mode) {
 			}
 			if($dirs) {
 				natcasesort($dirs);
-				foreach ($dirs as $dir) 
+				foreach ($dirs as $dir)
 				{
 					if ($types == 3) {
 						if (preg_match($pattern, $dir)) {
@@ -227,5 +216,4 @@ function read_dir_contents_recurse($directory, $mode) {
 		}
 		return $resultados;
 	}
-
 ?>

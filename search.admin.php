@@ -8,7 +8,7 @@
 		global $lang;
 		$module_page_admin[] = array(
 			'func'  => 'search_admin',
-			'title' => 'Search Admin'
+			'title' => $lang['search']['title']
 		);
 
 		return $module_page_admin;
@@ -16,7 +16,7 @@
  
 	function search_page_admin_search_admin() {
 		global $lang;
-		echo '<p>' . $lang["search"]["search"] . " " . $lang["general"]["admin-center"] . '</p>';
+		echo '<p>' . $lang['search']['admin_center'] . '</p>';
 	}
  
 ?>
