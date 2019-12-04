@@ -13,5 +13,5 @@ $lang['search']['results'] = 'wyniki';
 $lang['search']['no results'] = 'brak wyników';
 $lang['search']['results for'] = 'wyniki dla';
 $lang['search']['enter a larger search term'] = 'wpisz dłuższą frazę do szukania';
-$lang['search']['cannot search symbols'] = 'nie mogę szukać sumboli';
+$lang['search']['cannot search symbols'] = 'nie mogę szukać symboli';
 ?>

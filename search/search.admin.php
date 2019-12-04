@@ -17,6 +17,7 @@
 	function search_page_admin_search_admin() {
 		global $lang;
 		echo '<p>' . $lang['search']['admin_center'] . '</p>';
+		echo '<a href="admin.php?action=module_addtosite">&gt;&gt;&gt; '.$lang['modules_addtosite']['title'].'</a>';
 	}
  
 ?>
