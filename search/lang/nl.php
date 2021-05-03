@@ -18,5 +18,7 @@
     $lang['search']['enablepostscheckbox'] = 'Activeer zoeken in blog posts';
     $lang['search']['enablealbumscheckbox'] = 'Activeer zoeken in albums';
     $lang['search']['blogpage'] = 'Blog pagina';
+    $lang['search']['newpagecheckbox'] = 'Open resultaat in nieuwe pagina';
+
 
 ?>

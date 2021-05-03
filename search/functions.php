@@ -73,6 +73,11 @@ function read_dir_contents_recurse($directory, $mode) {
 	function searchcontent($querys, $usuario, $directory, $types) {
 		global $page1_link, $page2_link, $blog1_link, $blog2_link, $search_query, $seach_found_in;
 		$resultados = '';
+		$newpage = module_get_setting('search', 'newpage');
+		$action = '';
+		if ($newpage){
+			$action = " target='_blank'";
+		}
 		if (is_dir($directory)) {
 			$files = read_dir_contents_recurse($directory, 'files');
 			if ($files) {
@@ -121,7 +126,7 @@ function read_dir_contents_recurse($directory, $mode) {
 								$link = "**7**
 									<ul>
 										<li>
-											<a href='?file=" . $page . "'>$title</a>
+											<a href='?file=" . $page . "'".$action.">$title</a>
 											<p>$description</p>
 										</li>
 									</ul>";
@@ -145,7 +150,7 @@ function read_dir_contents_recurse($directory, $mode) {
 								$resultados .= "**7**
 									<ul>
 										<li>BLOG/$post_category/
-											<a href='" . $plink . "'\>
+											<a href='" . $plink . "'".$action."\>
 											$post_title</a>
 										</li>
 									</ul>";
@@ -189,7 +194,7 @@ function read_dir_contents_recurse($directory, $mode) {
 						if (preg_match($pattern, $dir)) {
 							$resultados .= "**7**
 								<ul>
-									<li><a href=\"".$usuario."index.php?module=albums&page=viewalbum&album=$dir&pageback=kop1.php\">
+									<li><a href=\"".$usuario."index.php?module=albums&page=viewalbum&album=$dir&pageback=kop1.php\"".$action.">
 										$dir</a>
 									</li>
 								</ul>";
@@ -209,7 +214,7 @@ function read_dir_contents_recurse($directory, $mode) {
 								$resultados .= "**7**
 									<ul>
 										<li>
-											<a href=\"".$usuario."index.php?module=albums&page=viewalbum&album=$dir&pageback=kop1.php\">
+											<a href=\"".$usuario."index.php?module=albums&page=viewalbum&album=$dir&pageback=kop1.php\"".$action.">
 											$dir</a>
 										</li>
 									</ul>";

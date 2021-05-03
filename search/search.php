@@ -39,7 +39,9 @@ function search_settings_default() {
 		'search_pages'	=> true,
 		'search_posts'	=> true,
 		'search_albums'	=> false,
-		'blogpage' => '');
+		'blogpage' => '',
+		'newpage' => false,
+	);
 }
 
 function search_pages_is_on() {
@@ -56,6 +58,10 @@ function search_albums_is_on() {
 
 function search_blogpage_is() {
 	return module_get_setting('search', 'blogpage') === '';
+}
+
+function search_newpage_is_on() {
+	return module_get_setting('search', 'newpage') === 'true';
 }
 
 
@@ -94,6 +100,10 @@ function search_admin_module_settings_beforepost() {
 		echo '</select></td>';
 		echo '<td><label for="blogpage">&emsp; '.$lang['search']['blogpage'].'</label></td>';
 		echo '			</tr>
+			<tr>
+				<td><input type="checkbox" name="newpage" id="newpage" value="true" ' . (search_newpage_is_on() ? ' checked="checked"' : '') . '/></td>
+				<td><label for="newpage">&emsp; '.$lang['search']['newpagecheckbox'].'</label></td>
+			</tr>
 		</table><br />';
 }
 
@@ -104,6 +114,7 @@ function search_admin_module_settings_afterpost() {
 		'search_posts' => (isset($_POST['search_posts'])) ? 'true' : 'false',
 		'search_albums' => (isset($_POST['search_albums'])) ? 'true' : 'false',
 		'blogpage' => (isset($_POST['blogpage'])) ? $_POST['blogpage'] : '',
+		'newpage' => (isset($_POST['newpage'])) ? $_POST['newpage'] : 'false',
 	);
 	//Save settings
 	module_save_settings('search', $settings);

@@ -18,6 +18,7 @@ $lang['search']['enablepagescheckbox'] = 'Enable pages search';
 $lang['search']['enablepostscheckbox'] = 'Enable posts search';
 $lang['search']['enablealbumscheckbox'] = 'Enable albums search';
 $lang['search']['blogpage'] = 'Blog page';
+$lang['search']['newpagecheckbox'] = 'Open result in new page';
 
 
 ?>
