@@ -14,4 +14,10 @@ $lang['search']['no results'] = 'no results';
 $lang['search']['results for'] = 'results for';
 $lang['search']['enter a larger search term'] = 'enter a larger search term';
 $lang['search']['cannot search symbols'] = 'cannot search symbols';
+$lang['search']['enablepagescheckbox'] = 'Enable pages search';
+$lang['search']['enablepostscheckbox'] = 'Enable posts search';
+$lang['search']['enablealbumscheckbox'] = 'Enable albums search';
+$lang['search']['blogpage'] = 'Blog page';
+
+
 ?>

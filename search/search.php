@@ -39,6 +39,73 @@ function search_settings_default() {
 		'search_pages'	=> true,
 		'search_posts'	=> true,
 		'search_albums'	=> false,
+		'blogpage' => '');
+}
+
+function search_pages_is_on() {
+	return module_get_setting('search', 'search_pages') === 'true';
+}
+
+function search_posts_is_on() {
+	return module_get_setting('search', 'search_posts') === 'true';
+}
+
+function search_albums_is_on() {
+	return module_get_setting('search', 'search_albums') === 'true';
+}
+
+function search_blogpage_is() {
+	return module_get_setting('search', 'blogpage') === '';
+}
+
+
+function search_admin_module_settings_beforepost() {
+	global $lang;
+	echo '<span class="kop2">'.$lang['search']['search'].'</span>
+		<table>
+			<tr>
+				<td><input type="checkbox" name="search_pages" id="search_pages" value="true" ' . (search_pages_is_on() ? ' checked="checked"' : '') . '/></td>
+				<td><label for="search_pages">&emsp; '.$lang['search']['enablepagescheckbox'].'</label></td>
+			</tr>
+				<tr>
+					<td><input type="checkbox" name="search_posts" id="search_posts" value="true" ' . (search_posts_is_on() ? ' checked="checked"' : '') . '/></td>
+					<td><label for="search_posts">&emsp; '.$lang['search']['enablepostscheckbox'].'</label></td>
+			</tr>
+			<tr>
+					<td><input type="checkbox" name="search_albums" id="search_albums" value="true" ' . (search_albums_is_on() ? ' checked="checked"' : '') . '/></td>
+					<td><label for="search_albums">&emsp; '.$lang['search']['enablealbumscheckbox'].'</label></td>
+			</tr>
+			<tr>';
+
+			$pages = get_pages();
+			echo '<td><select id="blogpage" name="blogpage">';
+			
+			foreach ($pages as $page){
+				require PAGE_DIR.'/'.$page;
+				echo '<option value='.get_page_seoname($page);
+				if (get_page_seoname($page) == search_blogpage_is()) {
+					echo ' selected';
+				}
+				echo '>'. sanitize($title) .'</option>';
+
+
+
+			}
+		echo '</select></td>';
+		echo '<td><label for="blogpage">&emsp; '.$lang['search']['blogpage'].'</label></td>';
+		echo '			</tr>
+		</table><br />';
+}
+
+function search_admin_module_settings_afterpost() {
+	//Compose settings array
+	$settings = array(
+		'search_pages' => (isset($_POST['search_pages'])) ? 'true' : 'false',
+		'search_posts' => (isset($_POST['search_posts'])) ? 'true' : 'false',
+		'search_albums' => (isset($_POST['search_albums'])) ? 'true' : 'false',
+		'blogpage' => (isset($_POST['blogpage'])) ? $_POST['blogpage'] : '',
 	);
+	//Save settings
+	module_save_settings('search', $settings);
 }
 ?>

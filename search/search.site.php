@@ -17,7 +17,8 @@
 		
 	    if (isset($_REQUEST['q'])) {
 		    $query = sanitize($_REQUEST['q']);
-			if (!preg_match('/[~!@#$%^&*()_+=-{};:<>"\[\]\'\?*\\/]/', $query)) {
+			$matches = $null;
+			if (preg_match('/~!@#$%^&*()_+=-{};\\:<\/>"\[\]\'\?*/', $query ) == 0 ) {
 			    if (strlen($query) > 2) {
 			    	echo '<div id="results">';
 			    	echo '<h2>' . $lang['search']['results for'] . ': "'. $query . '"</h2>';
